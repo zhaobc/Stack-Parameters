@@ -1,0 +1,1009 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Web sockets test</title>
+	<style type="text/css">
+		*{margin: 0px;padding: 0px;}
+		html,body{height:100%;width:100%;}
+		body{width: 100%;}
+		span{font-size:10px;}
+		table{margin-top:20px;background-color:#333333;}
+		td{background-color:#FFFFFF;}
+		.left{float:left;}
+		.stack2{display: none;}
+		.stack3{display: none;}
+		.stack4{display: none;}
+		.stack5{display: none;}
+		.stack6{display: none;}
+	</style>
+	<script src="jquery-min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		var ws;
+		function ToggleConnectionClicked(url){
+			try {
+				//ws = new WebSocket(url);//连接服务器
+				ws = new WebSocket(url);
+				ws.onopen = function(event)
+				{
+					alert("已经与"+url+"建立了连接, rn当前连接状态："+this.readyState);
+					//console.log("已经与"+url+"建立了连接, rn当前连接状态："+this.readyState);
+				};
+				ws.onmessage = function(event)
+				{
+					setHtml(event.data);
+					console.log(event.data);
+					//console.log("接收到服务器发送的数据:"+event.data);
+				};
+
+				ws.onclose = function(event){
+					alert("已经与服务器"+ws.url+"断开连接,当前连接状态："+this.readyState);
+					//console.log("已经与服务器"+ws.url+"断开连接,当前连接状态："+this.readyState);
+				};
+				ws.onerror = function(event){console.log("WebSocket异常！");};
+			} catch (ex) {
+				alert(ex.message);
+			}
+		}
+
+		function setHtml(pagedata){
+			var FuelBufferTankLevel_p1=document.getElementById("FuelBufferTankLevel_p1");
+			var FuelBufferTankLevel_p2=document.getElementById("FuelBufferTankLevel_p2");
+			var FuelBufferTankLevel_p3=document.getElementById("FuelBufferTankLevel_p3");
+			var FuelBufferTankLevel_p4=document.getElementById("FuelBufferTankLevel_p4");
+			var FuelBufferTankLevel_p5=document.getElementById("FuelBufferTankLevel_p5");
+			var FuelBufferTankLevel_p6=document.getElementById("FuelBufferTankLevel_p6");
+			var FuelBufferTankPumpDuty1=document.getElementById("FuelBufferTankPumpDuty1");
+			var FuelBufferTankPumpDuty2=document.getElementById("FuelBufferTankPumpDuty2");
+			var FuelBufferTankPumpDuty3=document.getElementById("FuelBufferTankPumpDuty3");
+			var FuelBufferTankPumpDuty4=document.getElementById("FuelBufferTankPumpDuty4");
+			var FuelBufferTankPumpDuty5=document.getElementById("FuelBufferTankPumpDuty5");
+			var FuelBufferTankPumpDuty6=document.getElementById("FuelBufferTankPumpDuty6");
+			var FuelEvaporatorPump1=document.getElementById("FuelEvaporatorPump1");
+			var FuelEvaporatorPump2=document.getElementById("FuelEvaporatorPump2");
+			var FuelEvaporatorPump3=document.getElementById("FuelEvaporatorPump3");
+			var FuelEvaporatorPump4=document.getElementById("FuelEvaporatorPump4");
+			var FuelEvaporatorPump5=document.getElementById("FuelEvaporatorPump5");
+			var FuelEvaporatorPump6=document.getElementById("FuelEvaporatorPump6");	
+			var LFCFlow1=document.getElementById("LFCFlow1");
+			var LFCFlow2=document.getElementById("LFCFlow2");
+			var LFCFlow3=document.getElementById("LFCFlow3");
+			var LFCFlow4=document.getElementById("LFCFlow4");
+			var LFCFlow5=document.getElementById("LFCFlow5");
+			var LFCFlow6=document.getElementById("LFCFlow6");
+			var FuelBurnerPumpDuty1=document.getElementById("FuelBurnerPumpDuty1");
+			var FuelBurnerPumpDuty2=document.getElementById("FuelBurnerPumpDuty2");
+			var FuelBurnerPumpDuty3=document.getElementById("FuelBurnerPumpDuty3");
+			var FuelBurnerPumpDuty4=document.getElementById("FuelBurnerPumpDuty4");
+			var FuelBurnerPumpDuty5=document.getElementById("FuelBurnerPumpDuty5");
+			var FuelBurnerPumpDuty6=document.getElementById("FuelBurnerPumpDuty6");
+			var FuelBurnerPumpFlow1=document.getElementById("FuelBurnerPumpFlow1");
+			var FuelBurnerPumpFlow2=document.getElementById("FuelBurnerPumpFlow2");
+			var FuelBurnerPumpFlow3=document.getElementById("FuelBurnerPumpFlow3");
+			var FuelBurnerPumpFlow4=document.getElementById("FuelBurnerPumpFlow4");
+			var FuelBurnerPumpFlow5=document.getElementById("FuelBurnerPumpFlow5");
+			var FuelBurnerPumpFlow6=document.getElementById("FuelBurnerPumpFlow6");
+			var BurnerBlowerDuty1=document.getElementById("BurnerBlowerDuty1");
+			var BurnerBlowerDuty2=document.getElementById("BurnerBlowerDuty2");
+			var BurnerBlowerDuty3=document.getElementById("BurnerBlowerDuty3");
+			var BurnerBlowerDuty4=document.getElementById("BurnerBlowerDuty4");
+			var BurnerBlowerDuty5=document.getElementById("BurnerBlowerDuty5");
+			var BurnerBlowerDuty6=document.getElementById("BurnerBlowerDuty6");
+			var CathodeBlower1=document.getElementById("CathodeBlower1");
+			var CathodeBlower2=document.getElementById("CathodeBlower2");
+			var CathodeBlower3=document.getElementById("CathodeBlower3");
+			var CathodeBlower4=document.getElementById("CathodeBlower4");
+			var CathodeBlower5=document.getElementById("CathodeBlower5");
+			var CathodeBlower6=document.getElementById("CathodeBlower6");
+			var BurnerEvaporatorHeaterDuty1=document.getElementById("BurnerEvaporatorHeaterDuty1");
+			var BurnerEvaporatorHeaterDuty2=document.getElementById("BurnerEvaporatorHeaterDuty2");
+			var BurnerEvaporatorHeaterDuty3=document.getElementById("BurnerEvaporatorHeaterDuty3");
+			var BurnerEvaporatorHeaterDuty4=document.getElementById("BurnerEvaporatorHeaterDuty4");
+			var BurnerEvaporatorHeaterDuty5=document.getElementById("BurnerEvaporatorHeaterDuty5");
+			var BurnerEvaporatorHeaterDuty6=document.getElementById("BurnerEvaporatorHeaterDuty6");
+			var TburnerEvaporator1=document.getElementById("TburnerEvaporator1");
+			var TburnerEvaporator2=document.getElementById("TburnerEvaporator2");
+			var TburnerEvaporator3=document.getElementById("TburnerEvaporator3");
+			var TburnerEvaporator4=document.getElementById("TburnerEvaporator4");
+			var TburnerEvaporator5=document.getElementById("TburnerEvaporator5");
+			var TburnerEvaporator6=document.getElementById("TburnerEvaporator6");
+			var BurnerBlockHeaterDuty1=document.getElementById("BurnerBlockHeaterDuty1");
+			var BurnerBlockHeaterDuty2=document.getElementById("BurnerBlockHeaterDuty2");
+			var BurnerBlockHeaterDuty3=document.getElementById("BurnerBlockHeaterDuty3");
+			var BurnerBlockHeaterDuty4=document.getElementById("BurnerBlockHeaterDuty4");
+			var BurnerBlockHeaterDuty5=document.getElementById("BurnerBlockHeaterDuty5");
+			var BurnerBlockHeaterDuty6=document.getElementById("BurnerBlockHeaterDuty6");
+			var TburnerBlock1=document.getElementById("TburnerBlock1");
+			var TburnerBlock2=document.getElementById("TburnerBlock2");
+			var TburnerBlock3=document.getElementById("TburnerBlock3");
+			var TburnerBlock4=document.getElementById("TburnerBlock4");
+			var TburnerBlock5=document.getElementById("TburnerBlock5");
+			var TburnerBlock6=document.getElementById("TburnerBlock6");
+			var Tburner1=document.getElementById("Tburner1");
+			var Tburner2=document.getElementById("Tburner2");
+			var Tburner3=document.getElementById("Tburner3");
+			var Tburner4=document.getElementById("Tburner4");
+			var Tburner5=document.getElementById("Tburner5");
+			var Tburner6=document.getElementById("Tburner6");
+			var Treformer11=document.getElementById("Treformer11");
+			var Treformer12=document.getElementById("Treformer12");
+			var Treformer13=document.getElementById("Treformer13");
+			var Treformer14=document.getElementById("Treformer14");
+			var Treformer15=document.getElementById("Treformer15");
+			var Treformer16=document.getElementById("Treformer16");
+			var Treformer41=document.getElementById("Treformer41");
+			var Treformer42=document.getElementById("Treformer42");
+			var Treformer43=document.getElementById("Treformer43");
+			var Treformer44=document.getElementById("Treformer44");
+			var Treformer45=document.getElementById("Treformer45");
+			var Treformer46=document.getElementById("Treformer46");
+			var TIntCoolantFCStackIn11=document.getElementById("TIntCoolantFCStackIn11");
+			var TIntCoolantFCStackIn12=document.getElementById("TIntCoolantFCStackIn12");
+			var TIntCoolantFCStackIn13=document.getElementById("TIntCoolantFCStackIn13");
+			var TIntCoolantFCStackIn14=document.getElementById("TIntCoolantFCStackIn14");
+			var TIntCoolantFCStackIn15=document.getElementById("TIntCoolantFCStackIn15");
+			var TIntCoolantFCStackIn16=document.getElementById("TIntCoolantFCStackIn16");
+			var ElectronicCompartmentBlowerDuty1=document.getElementById("ElectronicCompartmentBlowerDuty1");
+			var ElectronicCompartmentBlowerDuty2=document.getElementById("ElectronicCompartmentBlowerDuty2");
+			var ElectronicCompartmentBlowerDuty3=document.getElementById("ElectronicCompartmentBlowerDuty3");
+			var ElectronicCompartmentBlowerDuty4=document.getElementById("ElectronicCompartmentBlowerDuty4");
+			var ElectronicCompartmentBlowerDuty5=document.getElementById("ElectronicCompartmentBlowerDuty5");
+			var ElectronicCompartmentBlowerDuty6=document.getElementById("ElectronicCompartmentBlowerDuty6");
+			var MaxBoosterTemperature1=document.getElementById("MaxBoosterTemperature1");
+			var MaxBoosterTemperature2=document.getElementById("MaxBoosterTemperature2");
+			var MaxBoosterTemperature3=document.getElementById("MaxBoosterTemperature3");
+			var MaxBoosterTemperature4=document.getElementById("MaxBoosterTemperature4");
+			var MaxBoosterTemperature5=document.getElementById("MaxBoosterTemperature5");
+			var MaxBoosterTemperature6=document.getElementById("MaxBoosterTemperature6");
+			var TIntCoolantFCStackOut1=document.getElementById("TIntCoolantFCStackOut1");
+			var TIntCoolantFCStackOut2=document.getElementById("TIntCoolantFCStackOut2");
+			var TIntCoolantFCStackOut3=document.getElementById("TIntCoolantFCStackOut3");
+			var TIntCoolantFCStackOut4=document.getElementById("TIntCoolantFCStackOut4");
+			var TIntCoolantFCStackOut5=document.getElementById("TIntCoolantFCStackOut5");
+			var TIntCoolantFCStackOut6=document.getElementById("TIntCoolantFCStackOut6");
+			var MaxVfc1=document.getElementById("MaxVfc1");
+			var MaxVfc2=document.getElementById("MaxVfc2");
+			var MaxVfc3=document.getElementById("MaxVfc3");
+			var MaxVfc4=document.getElementById("MaxVfc4");
+			var MaxVfc5=document.getElementById("MaxVfc5");
+			var MaxVfc6=document.getElementById("MaxVfc6");
+			var TotalIfc1=document.getElementById("TotalIfc1");
+			var TotalIfc2=document.getElementById("TotalIfc2");
+			var TotalIfc3=document.getElementById("TotalIfc3");
+			var TotalIfc4=document.getElementById("TotalIfc4");
+			var TotalIfc5=document.getElementById("TotalIfc5");
+			var TotalIfc6=document.getElementById("TotalIfc6");
+			var FCPowerOut1=document.getElementById("FCPowerOut1");
+			var FCPowerOut2=document.getElementById("FCPowerOut2");
+			var FCPowerOut3=document.getElementById("FCPowerOut3");
+			var FCPowerOut4=document.getElementById("FCPowerOut4");
+			var FCPowerOut5=document.getElementById("FCPowerOut5");
+			var FCPowerOut6=document.getElementById("FCPowerOut6");
+			var IntCoolantCirculationPumpDuty1=document.getElementById("IntCoolantCirculationPumpDuty1");
+			var IntCoolantCirculationPumpDuty2=document.getElementById("IntCoolantCirculationPumpDuty2");
+			var IntCoolantCirculationPumpDuty3=document.getElementById("IntCoolantCirculationPumpDuty3");
+			var IntCoolantCirculationPumpDuty4=document.getElementById("IntCoolantCirculationPumpDuty4");
+			var IntCoolantCirculationPumpDuty5=document.getElementById("IntCoolantCirculationPumpDuty5");
+			var IntCoolantCirculationPumpDuty6=document.getElementById("IntCoolantCirculationPumpDuty6");
+			var RadiatorBlowerDuty1=document.getElementById("RadiatorBlowerDuty1");
+			var RadiatorBlowerDuty2=document.getElementById("RadiatorBlowerDuty2");
+			var RadiatorBlowerDuty3=document.getElementById("RadiatorBlowerDuty3");
+			var RadiatorBlowerDuty4=document.getElementById("RadiatorBlowerDuty4");
+			var RadiatorBlowerDuty5=document.getElementById("RadiatorBlowerDuty5");
+			var RadiatorBlowerDuty6=document.getElementById("RadiatorBlowerDuty6");
+			var BoosterLoad_SetPoint_LoadCurrentOperation1=document.getElementById("BoosterLoad_SetPoint_LoadCurrentOperation1");
+			var OpcoReqStart1=document.getElementById("OpcoReqStart1");
+			var OpcoReqStop1=document.getElementById("OpcoReqStop1");
+			var OpCoReqReset1=document.getElementById("OpCoReqReset1");
+			var BoosterLoad_SetPoint_LoadCurrentOperation2=document.getElementById("BoosterLoad_SetPoint_LoadCurrentOperation2");
+			var OpcoReqStart2=document.getElementById("OpcoReqStart2");
+			var OpcoReqStop2=document.getElementById("OpcoReqStop2");
+			var OpCoReqReset2=document.getElementById("OpCoReqReset2");
+			var BoosterLoad_SetPoint_LoadCurrentOperation3=document.getElementById("BoosterLoad_SetPoint_LoadCurrentOperation3");
+			var OpcoReqStart3=document.getElementById("OpcoReqStart3");
+			var OpcoReqStop3=document.getElementById("OpcoReqStop3");
+			var OpCoReqReset3=document.getElementById("OpCoReqReset3");
+			var BoosterLoad_SetPoint_LoadCurrentOperation4=document.getElementById("BoosterLoad_SetPoint_LoadCurrentOperation4");
+			var OpcoReqStart4=document.getElementById("OpcoReqStart4");
+			var OpcoReqStop4=document.getElementById("OpcoReqStop4");
+			var OpCoReqReset4=document.getElementById("OpCoReqReset4");
+			var BoosterLoad_SetPoint_LoadCurrentOperation5=document.getElementById("BoosterLoad_SetPoint_LoadCurrentOperation5");
+			var OpcoReqStart5=document.getElementById("OpcoReqStart5");
+			var OpcoReqStop5=document.getElementById("OpcoReqStop5");
+			var OpCoReqReset5=document.getElementById("OpCoReqReset5");
+			var BoosterLoad_SetPoint_LoadCurrentOperation6=document.getElementById("BoosterLoad_SetPoint_LoadCurrentOperation6");
+			var OpcoReqStart6=document.getElementById("OpcoReqStart6");
+			var OpcoReqStop6=document.getElementById("OpcoReqStop6");
+			var OpCoReqReset6=document.getElementById("OpCoReqReset6");
+			var APCControlProgramSMState1=document.getElementById("APCControlProgramSMState1");
+			var APCControlProgramSMState2=document.getElementById("APCControlProgramSMState2");
+			var APCControlProgramSMState3=document.getElementById("APCControlProgramSMState3");
+			var APCControlProgramSMState4=document.getElementById("APCControlProgramSMState4");
+			var APCControlProgramSMState5=document.getElementById("APCControlProgramSMState5");
+			var APCControlProgramSMState6=document.getElementById("APCControlProgramSMState6");
+			var json_Page=eval("("+pagedata+")");
+			var set1_elements=[BoosterLoad_SetPoint_LoadCurrentOperation1,OpcoReqStart1,OpcoReqStop1,OpCoReqReset1];
+			var set2_elements=[BoosterLoad_SetPoint_LoadCurrentOperation2,OpcoReqStart2,OpcoReqStop2,OpCoReqReset2];
+			var set3_elements=[BoosterLoad_SetPoint_LoadCurrentOperation3,OpcoReqStart3,OpcoReqStop3,OpCoReqReset3];
+			var set4_elements=[BoosterLoad_SetPoint_LoadCurrentOperation4,OpcoReqStart4,OpcoReqStop4,OpCoReqReset4];
+			var set5_elements=[BoosterLoad_SetPoint_LoadCurrentOperation5,OpcoReqStart5,OpcoReqStop5,OpCoReqReset5];
+			var set6_elements=[BoosterLoad_SetPoint_LoadCurrentOperation6,OpcoReqStart6,OpcoReqStop6,OpCoReqReset6];
+			var stack1_elements=[FuelBufferTankLevel_p1,FuelBufferTankPumpDuty1,FuelEvaporatorPump1,LFCFlow1,FuelBurnerPumpDuty1,FuelBurnerPumpFlow1,BurnerBlowerDuty1,CathodeBlower1,BurnerEvaporatorHeaterDuty1,TburnerEvaporator1,BurnerBlockHeaterDuty1,TburnerBlock1,Tburner1,Treformer11,Treformer41,TIntCoolantFCStackIn11,ElectronicCompartmentBlowerDuty1,MaxBoosterTemperature1,TIntCoolantFCStackOut1,
+				MaxVfc1,TotalIfc1,FCPowerOut1,IntCoolantCirculationPumpDuty1,RadiatorBlowerDuty1];
+			var stack2_elements=[FuelBufferTankLevel_p2,FuelBufferTankPumpDuty2,FuelEvaporatorPump2,LFCFlow2,FuelBurnerPumpDuty2,FuelBurnerPumpFlow2,BurnerBlowerDuty2,CathodeBlower2,BurnerEvaporatorHeaterDuty2,TburnerEvaporator2,BurnerBlockHeaterDuty2,TburnerBlock2,Tburner2,Treformer12,Treformer42,TIntCoolantFCStackIn12,ElectronicCompartmentBlowerDuty2,MaxBoosterTemperature2,TIntCoolantFCStackOut2,
+				MaxVfc2,TotalIfc2,FCPowerOut2,IntCoolantCirculationPumpDuty2,RadiatorBlowerDuty2];
+			var stack3_elements=[FuelBufferTankLevel_p3,FuelBufferTankPumpDuty3,FuelEvaporatorPump3,LFCFlow3,FuelBurnerPumpDuty3,FuelBurnerPumpFlow3,BurnerBlowerDuty3,CathodeBlower3,BurnerEvaporatorHeaterDuty3,TburnerEvaporator3,BurnerBlockHeaterDuty3,TburnerBlock3,Tburner3,Treformer13,Treformer43,TIntCoolantFCStackIn13,ElectronicCompartmentBlowerDuty3,MaxBoosterTemperature3,TIntCoolantFCStackOut3,
+				MaxVfc3,TotalIfc3,FCPowerOut3,IntCoolantCirculationPumpDuty3,RadiatorBlowerDuty3];
+			var stack4_elements=[FuelBufferTankLevel_p4,FuelBufferTankPumpDuty4,FuelEvaporatorPump4,LFCFlow4,FuelBurnerPumpDuty4,FuelBurnerPumpFlow4,BurnerBlowerDuty4,CathodeBlower4,BurnerEvaporatorHeaterDuty4,TburnerEvaporator4,BurnerBlockHeaterDuty4,TburnerBlock4,Tburner4,Treformer14,Treformer44,TIntCoolantFCStackIn14,ElectronicCompartmentBlowerDuty4,MaxBoosterTemperature4,TIntCoolantFCStackOut4,
+				MaxVfc4,TotalIfc4,FCPowerOut4,IntCoolantCirculationPumpDuty4,RadiatorBlowerDuty4];
+			var stack5_elements=[FuelBufferTankLevel_p5,FuelBufferTankPumpDuty5,FuelEvaporatorPump5,LFCFlow5,FuelBurnerPumpDuty5,FuelBurnerPumpFlow5,BurnerBlowerDuty5,CathodeBlower5,BurnerEvaporatorHeaterDuty5,TburnerEvaporator5,BurnerBlockHeaterDuty5,TburnerBlock5,Tburner5,Treformer15,Treformer45,TIntCoolantFCStackIn15,ElectronicCompartmentBlowerDuty5,MaxBoosterTemperature5,TIntCoolantFCStackOut5,
+				MaxVfc5,TotalIfc5,FCPowerOut5,IntCoolantCirculationPumpDuty5,RadiatorBlowerDuty5];
+			var stack6_elements=[FuelBufferTankLevel_p6,FuelBufferTankPumpDuty6,FuelEvaporatorPump6,LFCFlow6,FuelBurnerPumpDuty6,FuelBurnerPumpFlow6,BurnerBlowerDuty6,CathodeBlower6,BurnerEvaporatorHeaterDuty6,TburnerEvaporator6,BurnerBlockHeaterDuty6,TburnerBlock6,Tburner6,Treformer16,Treformer46,TIntCoolantFCStackIn16,ElectronicCompartmentBlowerDuty6,MaxBoosterTemperature6,TIntCoolantFCStackOut6,
+				MaxVfc6,TotalIfc6,FCPowerOut6,IntCoolantCirculationPumpDuty6,RadiatorBlowerDuty6];
+				set1_elements[0].innerText=json_Page.data[0].stack1[30].v;
+				set1_elements[1].innerText=json_Page.data[0].stack1[31].v;
+				set1_elements[2].innerText=json_Page.data[0].stack1[32].v;
+				set1_elements[3].innerText=json_Page.data[0].stack1[33].v;
+				set2_elements[0].innerText=json_Page.data[1].stack2[30].v;
+				set2_elements[1].innerText=json_Page.data[1].stack2[31].v;
+				set2_elements[2].innerText=json_Page.data[1].stack2[32].v;
+				set2_elements[3].innerText=json_Page.data[1].stack2[33].v;
+				set3_elements[0].innerText=json_Page.data[2].stack3[30].v;
+				set3_elements[1].innerText=json_Page.data[2].stack3[31].v;
+				set3_elements[2].innerText=json_Page.data[2].stack3[32].v;
+				set3_elements[3].innerText=json_Page.data[2].stack3[33].v;
+				set4_elements[0].innerText=json_Page.data[3].stack4[30].v;
+				set4_elements[1].innerText=json_Page.data[3].stack4[31].v;
+				set4_elements[2].innerText=json_Page.data[3].stack4[32].v;
+				set4_elements[3].innerText=json_Page.data[3].stack4[33].v;
+				set5_elements[0].innerText=json_Page.data[4].stack5[30].v;
+				set5_elements[1].innerText=json_Page.data[4].stack5[31].v;
+				set5_elements[2].innerText=json_Page.data[4].stack5[32].v;
+				set5_elements[3].innerText=json_Page.data[4].stack5[33].v;
+				set6_elements[0].innerText=json_Page.data[5].stack6[30].v;
+				set6_elements[1].innerText=json_Page.data[5].stack6[31].v;
+				set6_elements[2].innerText=json_Page.data[5].stack6[32].v;
+				set6_elements[3].innerText=json_Page.data[5].stack6[33].v;
+			for (var k = 0; k < stack1_elements.length; k++) {
+				stack1_elements[k].innerText=json_Page.data[0].stack1[k].v;
+			}
+			for (var k = 0; k < stack2_elements.length; k++) {
+				stack2_elements[k].innerText=json_Page.data[1].stack2[k].v;
+			}
+			for (var k = 0; k < stack3_elements.length; k++) {
+				stack3_elements[k].innerText=json_Page.data[2].stack3[k].v;
+			}
+			for (var k = 0; k < stack4_elements.length; k++) {
+				stack4_elements[k].innerText=json_Page.data[3].stack4[k].v;
+			}
+			for (var k = 0; k < stack5_elements.length; k++) {
+				stack5_elements[k].innerText=json_Page.data[4].stack5[k].v;
+			}
+			for (var k = 0; k < stack6_elements.length; k++) {
+				stack6_elements[k].innerText=json_Page.data[5].stack6[k].v;
+			}
+			console.log(json_Page.data[0].stack1[25].v);
+			console.log(json_Page.data[1].stack2[25].v);
+			console.log(json_Page.data[2].stack3[25].v);
+			console.log(json_Page.data[3].stack4[25].v);
+			console.log(json_Page.data[4].stack5[25].v);
+			console.log(json_Page.data[5].stack6[25].v);
+			APCControlProgramSMState1.innerText=(json_Page.data[0].stack1[25].v==1)?"Standby":"Preheat";
+			APCControlProgramSMState2.innerText=(json_Page.data[1].stack2[25].v==1)?"Standby":"Preheat";
+			APCControlProgramSMState3.innerText=(json_Page.data[2].stack3[25].v==1)?"Standby":"Preheat";
+			APCControlProgramSMState4.innerText=(json_Page.data[3].stack4[25].v==1)?"Standby":"Preheat";
+			APCControlProgramSMState5.innerText=(json_Page.data[4].stack5[25].v==1)?"Standby":"Preheat";
+			APCControlProgramSMState6.innerText=(json_Page.data[5].stack6[25].v==1)?"Standby":"Preheat";
+		}
+
+		function ShowStack(button_clicked) {
+			var stack1 = document.getElementsByName("stack1");
+			var stack2 = document.getElementsByName("stack2");
+			var stack3 = document.getElementsByName("stack3");
+			var stack4 = document.getElementsByName("stack4");
+			var stack5 = document.getElementsByName("stack5");
+			var stack6 = document.getElementsByName("stack6");
+			if (button_clicked == "ShowStack1") {
+				if (ws!=null) {
+					ws.close();
+				}
+				ToggleConnectionClicked("ws://127.0.0.1:8001");
+				for (var i = 0; i < stack1.length; i++) {
+					stack1[i].style.display = "inline-block";
+					stack2[i].style.display = "none";
+					stack3[i].style.display = "none";
+					stack4[i].style.display = "none";
+					stack5[i].style.display = "none";
+					stack6[i].style.display = "none";
+				}
+			} else if (button_clicked == "ShowStack2") {
+				if (ws!=null) {
+					ws.close();
+				}
+				ToggleConnectionClicked("ws://127.0.0.1:8002");
+				for (var i = 0; i < stack1.length; i++) {
+					stack1[i].style.display = "none";
+					stack2[i].style.display = "inline-block";
+					stack3[i].style.display = "none";
+					stack4[i].style.display = "none";
+					stack5[i].style.display = "none";
+					stack6[i].style.display = "none";
+				}
+			} else if (button_clicked == "ShowStack3") {
+				if (ws!=null) {
+					ws.close();
+				}
+				ToggleConnectionClicked("ws://127.0.0.1:8003");
+				for (var i = 0; i < stack1.length; i++) {
+					stack1[i].style.display = "none";
+					stack2[i].style.display = "none";
+					stack3[i].style.display = "inline-block";
+					stack4[i].style.display = "none";
+					stack5[i].style.display = "none";
+					stack6[i].style.display = "none";
+				}
+			} else if (button_clicked == "ShowStack4") {
+				if (ws!=null) {
+					ws.close();
+				}
+				ToggleConnectionClicked("ws://127.0.0.1:8004");
+				for (var i = 0; i < stack1.length; i++) {
+					stack1[i].style.display = "none";
+					stack2[i].style.display = "none";
+					stack3[i].style.display = "none";
+					stack4[i].style.display = "inline-block";
+					stack5[i].style.display = "none";
+					stack6[i].style.display = "none";
+				}
+			} else if (button_clicked == "ShowStack5") {
+				if (ws!=null) {
+					ws.close();
+				}
+				ToggleConnectionClicked("ws://127.0.0.1:8005");
+				for (var i = 0; i < stack1.length; i++) {
+					stack1[i].style.display = "none";
+					stack2[i].style.display = "none";
+					stack3[i].style.display = "none";
+					stack4[i].style.display = "none";
+					stack5[i].style.display = "inline-block";
+					stack6[i].style.display = "none";
+				}
+			} else {
+				if (ws!=null) {
+					ws.close();
+				}
+				ToggleConnectionClicked("ws://127.0.0.1:8006");
+				for (var i = 0; i < stack1.length; i++) {
+					stack1[i].style.display = "none";
+					stack2[i].style.display = "none";
+					stack3[i].style.display = "none";
+					stack4[i].style.display = "none";
+					stack5[i].style.display = "none";
+					stack6[i].style.display = "inline-block";
+				}
+			}
+		}
+
+		var _edit = 
+		{
+			IN: function (obj, id) {
+				var tag = obj.firstChild.tagName;
+				if (typeof(tag) != "undefined" && (tag == "INPUT" || tag == "TEXTAREA"))return;
+				var org = obj.innerHTML;
+				var orglen = org.replace(/[^\x00-\xff]/g,'**').length;
+				if (obj.offsetHeight <= 22) {
+					var val = obj.innerHTML;
+					var txt = document.createElement("INPUT");
+					txt.value = val;
+					txt.style.background = "#FFC";
+					txt.style.width = obj.offsetWidth*1.5 + "px" ;
+					obj.innerHTML = "";
+					obj.appendChild(txt);
+					txt.focus();
+					window.document.onkeydown = ChangeValue;
+					function ChangeValue(evt){
+						var evt = (evt) ? evt : window.event;
+						if (evt.keyCode) {
+							if(evt.keyCode == 13){
+								obj.innerHTML = txt.value;
+								ws.send("{'req':'post','list':[{'id':"+id+","+"'postData':"+obj.innerHTML+"}]}");
+								return false;
+							}
+						}
+					}
+					txt.onblur = function(e){
+						obj.innerHTML = txt.value;
+						ws.send("{'req':'post','list':[{'id':"+id+","+"'postData':"+obj.innerHTML+"}]}");
+						return false;
+					}
+					return false;
+				}else{
+					var content = obj.innerHTML;
+					var html = document.createElement('TEXTAREA');
+					html.style.width = obj.offsetWidth*1.5 + "px";
+					html.style.height = obj.offsetHeight*1.5 + "px";
+					obj.innerHTML = "";
+					html.value = content;
+					obj.appendChild(html);
+					html.focus();
+					html.onblur = function(e){
+						obj.innerHTML = html.value;
+						ws.send("{'req':'post','list':[{'id':"+id+","+"'postData':"+obj.innerHTML+"}]}");
+					}
+					return false;
+				}
+			}
+		}
+
+		function changeStatus(name,id){
+			var OpcoReqStart_Button1=document.getElementById("OpcoReqStart_Button1");
+			var OpcoReqStart_Button2=document.getElementById("OpcoReqStart_Button2");
+			var OpcoReqStart_Button3=document.getElementById("OpcoReqStart_Button3");
+			var OpcoReqStart_Button4=document.getElementById("OpcoReqStart_Button4");
+			var OpcoReqStart_Button5=document.getElementById("OpcoReqStart_Button5");
+			var OpcoReqStart_Button6=document.getElementById("OpcoReqStart_Button6");
+			var OpcoReqStop_Button1=document.getElementById("OpcoReqStop_Button1");
+			var OpcoReqStop_Button2=document.getElementById("OpcoReqStop_Button2");
+			var OpcoReqStop_Button3=document.getElementById("OpcoReqStop_Button3");
+			var OpcoReqStop_Button4=document.getElementById("OpcoReqStop_Button4");
+			var OpcoReqStop_Button5=document.getElementById("OpcoReqStop_Button5");
+			var OpcoReqStop_Button6=document.getElementById("OpcoReqStop_Button6");
+			var OpcoReqReset_Button1=document.getElementById("OpcoReqReset_Button1");
+			var OpcoReqReset_Button2=document.getElementById("OpcoReqReset_Button2");
+			var OpcoReqReset_Button3=document.getElementById("OpcoReqReset_Button3");
+			var OpcoReqReset_Button4=document.getElementById("OpcoReqReset_Button4");
+			var OpcoReqReset_Button5=document.getElementById("OpcoReqReset_Button5");
+			var OpcoReqReset_Button6=document.getElementById("OpCoReqReset_Button6");
+			var OpcoReqStart_Buttons=[OpcoReqStart_Button1,OpcoReqStart_Button2,OpcoReqStart_Button3,OpcoReqStart_Button4,OpcoReqStart_Button5,OpcoReqStart_Button6];
+			var OpcoReqStop_Buttons=[OpcoReqStop_Button1,OpcoReqStop_Button2,OpcoReqStop_Button3,OpcoReqStop_Button4,OpcoReqStop_Button5,OpcoReqStop_Button6];
+			var OpcoReqReset_Buttons=[OpcoReqReset_Button1,OpcoReqReset_Button2,OpcoReqReset_Button3,OpcoReqReset_Button4,OpcoReqReset_Button5,OpcoReqReset_Button6];
+			var BoosterLoad_SetPoint_LoadCurrentOperation1=document.getElementById("BoosterLoad_SetPoint_LoadCurrentOperation1");
+			var OpcoReqStart1=document.getElementById("OpcoReqStart1");
+			var OpcoReqStop1=document.getElementById("OpcoReqStop1");
+			var OpCoReqReset1=document.getElementById("OpCoReqReset1");
+			var BoosterLoad_SetPoint_LoadCurrentOperation2=document.getElementById("BoosterLoad_SetPoint_LoadCurrentOperation2");
+			var OpcoReqStart2=document.getElementById("OpcoReqStart2");
+			var OpcoReqStop2=document.getElementById("OpcoReqStop2");
+			var OpCoReqReset2=document.getElementById("OpCoReqReset2");
+			var BoosterLoad_SetPoint_LoadCurrentOperation3=document.getElementById("BoosterLoad_SetPoint_LoadCurrentOperation3");
+			var OpcoReqStart3=document.getElementById("OpcoReqStart3");
+			var OpcoReqStop3=document.getElementById("OpcoReqStop3");
+			var OpCoReqReset3=document.getElementById("OpCoReqReset3");
+			var BoosterLoad_SetPoint_LoadCurrentOperation4=document.getElementById("BoosterLoad_SetPoint_LoadCurrentOperation4");
+			var OpcoReqStart4=document.getElementById("OpcoReqStart4");
+			var OpcoReqStop4=document.getElementById("OpcoReqStop4");
+			var OpCoReqReset4=document.getElementById("OpCoReqReset4");
+			var BoosterLoad_SetPoint_LoadCurrentOperation5=document.getElementById("BoosterLoad_SetPoint_LoadCurrentOperation5");
+			var OpcoReqStart5=document.getElementById("OpcoReqStart5");
+			var OpcoReqStop5=document.getElementById("OpcoReqStop5");
+			var OpCoReqReset5=document.getElementById("OpCoReqReset5");
+			var BoosterLoad_SetPoint_LoadCurrentOperation6=document.getElementById("BoosterLoad_SetPoint_LoadCurrentOperation6");
+			var OpcoReqStart6=document.getElementById("OpcoReqStart6");
+			var OpcoReqStop6=document.getElementById("OpcoReqStop6");
+			var OpCoReqReset6=document.getElementById("OpCoReqReset6");
+			var set1_elements=[BoosterLoad_SetPoint_LoadCurrentOperation1,OpcoReqStart1,OpcoReqStop1,OpCoReqReset1];
+			var set2_elements=[BoosterLoad_SetPoint_LoadCurrentOperation2,OpcoReqStart2,OpcoReqStop2,OpCoReqReset2];
+			var set3_elements=[BoosterLoad_SetPoint_LoadCurrentOperation3,OpcoReqStart3,OpcoReqStop3,OpCoReqReset3];
+			var set4_elements=[BoosterLoad_SetPoint_LoadCurrentOperation4,OpcoReqStart4,OpcoReqStop4,OpCoReqReset4];
+			var set5_elements=[BoosterLoad_SetPoint_LoadCurrentOperation5,OpcoReqStart5,OpcoReqStop5,OpCoReqReset5];
+			var set6_elements=[BoosterLoad_SetPoint_LoadCurrentOperation6,OpcoReqStart6,OpcoReqStop6,OpCoReqReset6];
+			var element_get=document.getElementById(name);
+			var num=parseInt(name.substr(name.length-1,1));
+			if(name.substring(9,10)=="a"){//start
+				OpcoReqStart_Buttons[num-1].disabled=true;
+				OpcoReqStop_Buttons[num-1].disabled = false;
+				OpcoReqReset_Buttons[num-1].disabled=false;
+				ws.send("{'req':'post','list':[{'id':"+25+","+"'postData':"+2+"},{'id':"+id+","+"'postData':"+2+"},{'id':"+32+","+"'postData':"+1+"},{'id':"+33+","+"'postData':"+1+"}]}");
+			}else if (name.substring(9,10)=="o") {//stop
+				OpcoReqStart_Buttons[num-1].disabled=false;
+				OpcoReqStop_Buttons[num-1].disabled = true;
+				OpcoReqReset_Buttons[num-1].disabled=true;
+				ws.send("{'req':'post','list':[{'id':"+25+","+"'postData':"+1+"},{'id':"+31+","+"'postData':"+1+"},{'id':"+id+","+"'postData':"+2+"},{'id':"+33+","+"'postData':"+1+"}]}");
+			}else {//reset
+				OpcoReqStart_Buttons[num-1].disabled=false;
+				OpcoReqStop_Buttons[num-1].disabled = true;
+				OpcoReqReset_Buttons[num-1].disabled=true;
+				ws.send("{'req':'post','list':[{'id':"+25+","+"'postData':"+1+"},{'id':"+31+","+"'postData':"+1+"},{'id':"+32+","+"'postData':"+1+"},{'id':"+id+","+"'postData':"+2+"}]}");
+			}
+		}
+
+		function CloseConn(data){
+			ws.close();
+		}
+
+	</script>
+</head>
+<body>
+	<div class="main" style="width:100%;margin-top:30px;">
+		<div class="img" style="float:left;background-image: url('pic1.png');margin-left:30px;width:924px;height:537px;">
+			<div class="part1" style="width:100%;height: 215px;">
+				<div class="FuelBuffer left" style="display:inline-block;width:12%;">
+					<div name="FuelBufferTankLevel_p" style="height:107px;padding-top:42px;padding-left:65px;">
+						<span id="FuelBufferTankLevel_p1" class="stack1" name="stack1" onclick="_edit.IN(this,0);">5201</span>
+						<span id="FuelBufferTankLevel_p2" class="stack2" name="stack2" onclick="_edit.IN(this,0);"></span>
+						<span id="FuelBufferTankLevel_p3" class="stack3" name="stack3" onclick="_edit.IN(this,0);"></span>
+						<span id="FuelBufferTankLevel_p4" class="stack4" name="stack4" onclick="_edit.IN(this,0);"></span>
+						<span id="FuelBufferTankLevel_p5" class="stack5" name="stack5" onclick="_edit.IN(this,0);"></span>
+						<span id="FuelBufferTankLevel_p6" class="stack6" name="stack6" onclick="_edit.IN(this,0);"></span>
+					</div>
+					<div name="FuelBufferTankPumpDuty" style="height:46px;padding-left:76px;">
+						<span id="FuelBufferTankPumpDuty1" class="stack1" name="stack1" onclick="_edit.IN(this,1);">3590</span>
+						<span id="FuelBufferTankPumpDuty2" class="stack2" name="stack2" onclick="_edit.IN(this,1);"></span>
+						<span id="FuelBufferTankPumpDuty3" class="stack3" name="stack3" onclick="_edit.IN(this,1);"></span>
+						<span id="FuelBufferTankPumpDuty4" class="stack4" name="stack4" onclick="_edit.IN(this,1);"></span>
+						<span id="FuelBufferTankPumpDuty5" class="stack5" name="stack5" onclick="_edit.IN(this,1);"></span>
+						<span id="FuelBufferTankPumpDuty6" class="stack6" name="stack6" onclick="_edit.IN(this,1);"></span>
+					</div>
+				</div>
+				<div class="FuelPump left" style="width:13%;">
+					<div name="FuelEvaporatorPump" class="stack1" id="" style="padding-top:116px;padding-left:93px;">
+						<span id="FuelEvaporatorPump1" class="stack1" name="stack1" onclick="_edit.IN(this,2);">3870</span>
+						<span id="FuelEvaporatorPump2" class="stack2" name="stack2" onclick="_edit.IN(this,2);"></span>
+						<span id="FuelEvaporatorPump3" class="stack3" name="stack3" onclick="_edit.IN(this,2);"></span>
+						<span id="FuelEvaporatorPump4" class="stack4" name="stack4" onclick="_edit.IN(this,2);"></span>
+						<span id="FuelEvaporatorPump5" class="stack5" name="stack5" onclick="_edit.IN(this,2);"></span>
+						<span id="FuelEvaporatorPump6" class="stack6" name="stack6" onclick="_edit.IN(this,2);"></span>
+					</div>
+					<div name="LFCFlow" style="padding-left: 83px;">
+						<span id="LFCFlow1" class="stack1" name="stack1" onclick="_edit.IN(this,3);">4151</span>
+						<span id="LFCFlow2" class="stack2" name="stack2" onclick="_edit.IN(this,3);"></span>
+						<span id="LFCFlow3" class="stack3" name="stack3" onclick="_edit.IN(this,3);"></span>
+						<span id="LFCFlow4" class="stack4" name="stack4" onclick="_edit.IN(this,3);"></span>
+						<span id="LFCFlow5" class="stack5" name="stack5" onclick="_edit.IN(this,3);"></span>
+						<span id="LFCFlow6" class="stack6" name="stack6" onclick="_edit.IN(this,3);"></span>
+					</div>
+					<div name="FuelBurnerPumpDuty" style="padding-top:18px;padding-left: 93px;">
+						<span id="FuelBurnerPumpDuty1" class="stack1" name="stack1" onclick="_edit.IN(this,4);">3842</span>
+						<span id="FuelBurnerPumpDuty2" class="stack2" name="stack2" onclick="_edit.IN(this,4);"></span>
+						<span id="FuelBurnerPumpDuty3" class="stack3" name="stack3" onclick="_edit.IN(this,4);"></span>
+						<span id="FuelBurnerPumpDuty4" class="stack4" name="stack4" onclick="_edit.IN(this,4);"></span>
+						<span id="FuelBurnerPumpDuty5" class="stack5" name="stack5" onclick="_edit.IN(this,4);"></span>
+						<span id="FuelBurnerPumpDuty6" class="stack6" name="stack6" onclick="_edit.IN(this,4);"></span>
+					</div>
+					<div name="FuelBurnerPumpFlow" style="padding-left: 83px;">
+						<span id="FuelBurnerPumpFlow1" class="stack1" name="stack1" onclick="_edit.IN(this,5);">5159</span>
+						<span id="FuelBurnerPumpFlow2" class="stack2" name="stack2" onclick="_edit.IN(this,5);"></span>
+						<span id="FuelBurnerPumpFlow3" class="stack3" name="stack3" onclick="_edit.IN(this,5);"></span>
+						<span id="FuelBurnerPumpFlow4" class="stack4" name="stack4" onclick="_edit.IN(this,5);"></span>
+						<span id="FuelBurnerPumpFlow5" class="stack5" name="stack5" onclick="_edit.IN(this,5);"></span>
+						<span id="FuelBurnerPumpFlow6" class="stack6" name="stack6" onclick="_edit.IN(this,5);"></span>
+					</div>
+				</div>
+				<div class="Blower left" style="width:6%;">
+					<div name="BurnerBlowerDuty" style="padding-top:100px;padding-left:20px;">
+						<span id="BurnerBlowerDuty1" class="stack1" name="stack1" onclick="_edit.IN(this,6);"><a>3646</a></span>
+						<span id="BurnerBlowerDuty2" class="stack2" name="stack2" onclick="_edit.IN(this,6);"></span>
+						<span id="BurnerBlowerDuty3" class="stack3" name="stack3" onclick="_edit.IN(this,6);"></span>
+						<span id="BurnerBlowerDuty4" class="stack4" name="stack4" onclick="_edit.IN(this,6);"></span>
+						<span id="BurnerBlowerDuty5" class="stack5" name="stack5" onclick="_edit.IN(this,6);"></span>
+						<span id="BurnerBlowerDuty6" class="stack6" name="stack6" onclick="_edit.IN(this,6);"></span>
+					</div>
+					<div name="CathodeBlower" style="padding-top:79px;padding-left:20px;">
+						<span id="CathodeBlower1" class="stack1" name="stack1" onclick="_edit.IN(this,7);">3884</span>
+						<span id="CathodeBlower2" class="stack2" name="stack2" onclick="_edit.IN(this,7);"></span>
+						<span id="CathodeBlower3" class="stack3" name="stack3" onclick="_edit.IN(this,7);"></span>
+						<span id="CathodeBlower4" class="stack4" name="stack4" onclick="_edit.IN(this,7);"></span>
+						<span id="CathodeBlower5" class="stack5" name="stack5" onclick="_edit.IN(this,7);"></span>
+						<span id="CathodeBlower6" class="stack6" name="stack6" onclick="_edit.IN(this,7);"></span>
+					</div>
+				</div>
+				<div class="Burner left" style="width: 16%">
+					<div name="BurnerEvaporatorHeaterDuty" style="padding-top:18px;padding-left: 92px;">
+						<span id="BurnerEvaporatorHeaterDuty1" class="stack1" name="stack1" onclick="_edit.IN(this,8);">3758</span>
+						<span id="BurnerEvaporatorHeaterDuty2" class="stack2" name="stack2" onclick="_edit.IN(this,8);"></span>
+						<span id="BurnerEvaporatorHeaterDuty3" class="stack3" name="stack3" onclick="_edit.IN(this,8);"></span>
+						<span id="BurnerEvaporatorHeaterDuty4" class="stack4" name="stack4" onclick="_edit.IN(this,8);"></span>
+						<span id="BurnerEvaporatorHeaterDuty5" class="stack5" name="stack5" onclick="_edit.IN(this,8);"></span>
+						<span id="BurnerEvaporatorHeaterDuty6" class="stack6" name="stack6" onclick="_edit.IN(this,8);"></span>
+					</div>
+					<div name="TburnerEvaporator" style="padding-left:92px;">
+						<span id="TburnerEvaporator1" class="stack1" name="stack1" onclick="_edit.IN(this,9);">2750</span>
+						<span id="TburnerEvaporator2" class="stack2" name="stack2" onclick="_edit.IN(this,9);"></span>
+						<span id="TburnerEvaporator3" class="stack3" name="stack3" onclick="_edit.IN(this,9);"></span>
+						<span id="TburnerEvaporator4" class="stack4" name="stack4" onclick="_edit.IN(this,9);"></span>
+						<span id="TburnerEvaporator5" class="stack5" name="stack5" onclick="_edit.IN(this,9);"></span>
+						<span id="TburnerEvaporator6" class="stack6" name="stack6" onclick="_edit.IN(this,9);"></span>
+					</div>
+					<div name="BurnerBlockHeaterDuty" style="padding-top:90px;padding-left: 113px;">
+						<span id="BurnerBlockHeaterDuty1" class="stack1" name="stack1" onclick="_edit.IN(this,10);">3786</span>
+						<span id="BurnerBlockHeaterDuty2" class="stack2" name="stack2" onclick="_edit.IN(this,10);"></span>
+						<span id="BurnerBlockHeaterDuty3" class="stack3" name="stack3" onclick="_edit.IN(this,10);"></span>
+						<span id="BurnerBlockHeaterDuty4" class="stack4" name="stack4" onclick="_edit.IN(this,10);"></span>
+						<span id="BurnerBlockHeaterDuty5" class="stack5" name="stack5" onclick="_edit.IN(this,10);"></span>
+						<span id="BurnerBlockHeaterDuty6" class="stack6" name="stack6" onclick="_edit.IN(this,10);"></span>
+					</div>
+					<div name="TburnerBlock" style="padding-left: 118px;">
+						<span id="TburnerBlock1" class="stack1" name="stack1" onclick="_edit.IN(this,11);">2694</span>
+						<span id="TburnerBlock2" class="stack2" name="stack2" onclick="_edit.IN(this,11);"></span>
+						<span id="TburnerBlock3" class="stack3" name="stack3" onclick="_edit.IN(this,11);"></span>
+						<span id="TburnerBlock4" class="stack4" name="stack4" onclick="_edit.IN(this,11);"></span>
+						<span id="TburnerBlock5" class="stack5" name="stack5" onclick="_edit.IN(this,11);"></span>
+						<span id="TburnerBlock6" class="stack6" name="stack6" onclick="_edit.IN(this,11);"></span>
+					</div>
+				</div>
+				<div class="left" style="width:6%;">
+					<div name="Tburner" style="padding-top: 32px;padding-left: 12px;">
+						<span id="Tburner1" class="stack1" name="stack1" onclick="_edit.IN(this,12);">2680</span>
+						<span id="Tburner2" class="stack2" name="stack2" onclick="_edit.IN(this,12);"></span>
+						<span id="Tburner3" class="stack3" name="stack3" onclick="_edit.IN(this,12);"></span>
+						<span id="Tburner4" class="stack4" name="stack4" onclick="_edit.IN(this,12);"></span>
+						<span id="Tburner5" class="stack5" name="stack5" onclick="_edit.IN(this,12);"></span>
+						<span id="Tburner6" class="stack6" name="stack6" onclick="_edit.IN(this,12);"></span>
+					</div>
+				</div>
+				<div name="Treformer1" class="Treformer1 left" style="width:6%;padding-top:142px;padding-left:18px;">
+					<span id="Treformer11" class="stack1" name="stack1" onclick="_edit.IN(this,13);">2582</span>
+					<span id="Treformer12" class="stack2" name="stack2" onclick="_edit.IN(this,13);"></span>
+					<span id="Treformer13" class="stack3" name="stack3" onclick="_edit.IN(this,13);"></span>
+					<span id="Treformer14" class="stack4" name="stack4" onclick="_edit.IN(this,13);"></span>
+					<span id="Treformer15" class="stack5" name="stack5" onclick="_edit.IN(this,13);"></span>
+					<span id="Treformer16" class="stack6" name="stack6" onclick="_edit.IN(this,13);"></span>
+				</div>
+				<div name="Treformer4" class="Treformer4 left" style="width:15%;padding-top:142px;padding-left:44px;">
+					<span id="Treformer41" class="stack1" name="stack1" onclick="_edit.IN(this,14);">2624</span>
+					<span id="Treformer42" class="stack2" name="stack2" onclick="_edit.IN(this,14);"></span>
+					<span id="Treformer43" class="stack3" name="stack3" onclick="_edit.IN(this,14);"></span>
+					<span id="Treformer44" class="stack4" name="stack4" onclick="_edit.IN(this,14);"></span>
+					<span id="Treformer45" class="stack5" name="stack5" onclick="_edit.IN(this,14);"></span>
+					<span id="Treformer46" class="stack6" name="stack6" onclick="_edit.IN(this,14);"></span>
+				</div>
+			</div>
+			<div class="part2" style="width:100%;height: 205px;">
+				<div class="Temp left">
+					<div name="TIntCoolantFCStackIn" style="padding-left: 270px;padding-top: 72px;">
+						<span id="TIntCoolantFCStackIn11" class="stack1" name="stack1" onclick="_edit.IN(this,15);">2722</span>
+						<span id="TIntCoolantFCStackIn12" class="stack2" name="stack2" onclick="_edit.IN(this,15);"></span>
+						<span id="TIntCoolantFCStackIn13" class="stack3" name="stack3" onclick="_edit.IN(this,15);"></span>
+						<span id="TIntCoolantFCStackIn14" class="stack4" name="stack4" onclick="_edit.IN(this,15);"></span>
+						<span id="TIntCoolantFCStackIn15" class="stack5" name="stack5" onclick="_edit.IN(this,15);"></span>
+						<span id="TIntCoolantFCStackIn16" class="stack6" name="stack6" onclick="_edit.IN(this,15);"></span>
+					</div>
+					<div name="ElectronicCompartmentBlowerDuty" style="padding-left: 266px;padding-top: 24px;">
+						<span id="ElectronicCompartmentBlowerDuty1" class="stack1" name="stack1" onclick="_edit.IN(this,16);">3702</span>
+						<span id="ElectronicCompartmentBlowerDuty2" class="stack2" name="stack2" onclick="_edit.IN(this,16);"></span>
+						<span id="ElectronicCompartmentBlowerDuty3" class="stack3" name="stack3" onclick="_edit.IN(this,16);"></span>
+						<span id="ElectronicCompartmentBlowerDuty4" class="stack4" name="stack4" onclick="_edit.IN(this,16);"></span>
+						<span id="ElectronicCompartmentBlowerDuty5" class="stack5" name="stack5" onclick="_edit.IN(this,16);"></span>
+						<span id="ElectronicCompartmentBlowerDuty6" class="stack6" name="stack6" onclick="_edit.IN(this,16);"></span>
+					</div>
+				</div>
+				<div name="DC/DC OutputV" class="voltage left" style="padding-left: 176px;padding-top: 146px;"><span>0</span></div>
+				<div name="MaxBoosterTemperature" class="MaxBoosterTemperature left" style="padding-left: 18px;padding-top: 146px;">
+					<span id="MaxBoosterTemperature1" class="stack1" name="stack1" onclick="_edit.IN(this,17);">5523</span>
+					<span id="MaxBoosterTemperature2" class="stack2" name="stack2" onclick="_edit.IN(this,17);"></span>
+					<span id="MaxBoosterTemperature3" class="stack3" name="stack3" onclick="_edit.IN(this,17);"></span>
+					<span id="MaxBoosterTemperature4" class="stack4" name="stack4" onclick="_edit.IN(this,17);"></span>
+					<span id="MaxBoosterTemperature5" class="stack5" name="stack5" onclick="_edit.IN(this,17);"></span>
+					<span id="MaxBoosterTemperature6" class="stack6" name="stack6" onclick="_edit.IN(this,17);"></span>
+				</div>
+				<div class="ElectronicParams left" style="width: 23%;">
+					<div name="TIntCoolantFCStackOut" style="padding-left: 112px;padding-top: 82px;">
+						<span id="TIntCoolantFCStackOut1" class="stack1" name="stack1" onclick="_edit.IN(this,18);">2736</span>
+						<span id="TIntCoolantFCStackOut2" class="stack2" name="stack2" onclick="_edit.IN(this,18);"></span>
+						<span id="TIntCoolantFCStackOut3" class="stack3" name="stack3" onclick="_edit.IN(this,18);"></span>
+						<span id="TIntCoolantFCStackOut4" class="stack4" name="stack4" onclick="_edit.IN(this,18);"></span>
+						<span id="TIntCoolantFCStackOut5" class="stack5" name="stack5" onclick="_edit.IN(this,18);"></span>
+						<span id="TIntCoolantFCStackOut6" class="stack6" name="stack6" onclick="_edit.IN(this,18);"></span>
+					</div>
+					<div name="MaxVfc" style="padding-left: 87px;padding-top: 22px;">
+						<span id="MaxVfc1" class="stack1" name="stack1" onclick="_edit.IN(this,19);">4615</span>
+						<span id="MaxVfc2" class="stack2" name="stack2" onclick="_edit.IN(this,19);"></span>
+						<span id="MaxVfc3" class="stack3" name="stack3" onclick="_edit.IN(this,19);"></span>
+						<span id="MaxVfc4" class="stack4" name="stack4" onclick="_edit.IN(this,19);"></span>
+						<span id="MaxVfc5" class="stack5" name="stack5" onclick="_edit.IN(this,19);"></span>
+						<span id="MaxVfc6" class="stack6" name="stack6" onclick="_edit.IN(this,19);"></span>
+					</div>
+					<div name="TotalIfc" style="padding-left: 87px;">
+						<span id="TotalIfc1" class="stack1" name="stack1" onclick="_edit.IN(this,20);">4179</span>
+						<span id="TotalIfc2" class="stack2" name="stack2" onclick="_edit.IN(this,20);"></span>
+						<span id="TotalIfc3" class="stack3" name="stack3" onclick="_edit.IN(this,20);"></span>
+						<span id="TotalIfc4" class="stack4" name="stack4" onclick="_edit.IN(this,20);"></span>
+						<span id="TotalIfc5" class="stack5" name="stack5" onclick="_edit.IN(this,20);"></span>
+						<span id="TotalIfc6" class="stack6" name="stack6" onclick="_edit.IN(this,20);"></span>
+					</div>
+					<div name="FCPowerOut" style="padding-left: 87px;">
+						<span id="FCPowerOut1" class="stack1" name="stack1" onclick="_edit.IN(this,21);">4193</span>
+						<span id="FCPowerOut2" class="stack2" name="stack2" onclick="_edit.IN(this,21);"></span>
+						<span id="FCPowerOut3" class="stack3" name="stack3" onclick="_edit.IN(this,21);"></span>
+						<span id="FCPowerOut4" class="stack4" name="stack4" onclick="_edit.IN(this,21);"></span>
+						<span id="FCPowerOut5" class="stack5" name="stack5" onclick="_edit.IN(this,21);"></span>
+						<span id="FCPowerOut6" class="stack6" name="stack6" onclick="_edit.IN(this,21);"></span>
+					</div>
+				</div>
+			</div>
+			<div class="part3" style="width:100%;height:72px;">
+				<div name="TegPump" class="TegPump left" style="width: 20%;padding-left: 143px;"><span>0</span></div>
+				<div class="HeatExchange left" style="width:30%;">
+					<div name="IntCoolantCirculationPumpDuty" style="padding-left: 72px;padding-top: 4px;">
+						<span id="IntCoolantCirculationPumpDuty1" class="stack1" name="stack1" onclick="_edit.IN(this,22);">3618</span>
+						<span id="IntCoolantCirculationPumpDuty2" class="stack2" name="stack2" onclick="_edit.IN(this,22);"></span>
+						<span id="IntCoolantCirculationPumpDuty3" class="stack3" name="stack3" onclick="_edit.IN(this,22);"></span>
+						<span id="IntCoolantCirculationPumpDuty4" class="stack4" name="stack4" onclick="_edit.IN(this,22);"></span>
+						<span id="IntCoolantCirculationPumpDuty5" class="stack5" name="stack5" onclick="_edit.IN(this,22);"></span>
+						<span id="IntCoolantCirculationPumpDuty6" class="stack6" name="stack6" onclick="_edit.IN(this,22);"></span>
+					</div>
+					<div name="RadiatorBlowerDuty" style="padding-left: 80px;padding-top: 32px;">
+						<span id="RadiatorBlowerDuty1" class="stack1" name="stack1" onclick="_edit.IN(this,23);">3674</span>
+						<span id="RadiatorBlowerDuty2" class="stack2" name="stack2" onclick="_edit.IN(this,23);"></span>
+						<span id="RadiatorBlowerDuty3" class="stack3" name="stack3" onclick="_edit.IN(this,23);"></span>
+						<span id="RadiatorBlowerDuty4" class="stack4" name="stack4" onclick="_edit.IN(this,23);"></span>
+						<span id="RadiatorBlowerDuty5" class="stack5" name="stack5" onclick="_edit.IN(this,23);"></span>
+						<span id="RadiatorBlowerDuty6" class="stack6" name="stack6" onclick="_edit.IN(this,23);"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="left" style="width: 20%;">
+			<div>
+				<button style="width: 75px;height: 30px;" id="ShowStack1" name="ShowStack1" onclick="ShowStack('ShowStack1');">连接电堆1</button>
+				<button style="width: 75px;height: 30px;" onclick="CloseConn(1);">关闭连接</button>
+			</div>
+			<div>
+				<button style="width: 75px;height: 30px;" id="ShowStack2" name="ShowStack2" onclick="ShowStack('ShowStack2');">连接电堆2</button>
+				<button style="width: 75px;height: 30px;" onclick="CloseConn(2);">关闭连接</button>
+			</div>
+			<div>
+				<button style="width: 75px;height: 30px;" id="ShowStack3" name="ShowStack3" onclick="ShowStack('ShowStack3');">连接电堆3</button>
+				<button style="width: 75px;height: 30px;" onclick="CloseConn(3);">关闭连接</button>
+			</div>
+			<div>
+				<button style="width: 75px;height: 30px;" id="ShowStack4" name="ShowStack4" onclick="ShowStack('ShowStack4');">连接电堆4</button>
+				<button style="width: 75px;height: 30px;" onclick="CloseConn(4);">关闭连接</button>
+			</div>
+			<div>
+				<button style="width: 75px;height: 30px;" id="ShowStack5" name="ShowStack5" onclick="ShowStack('ShowStack5');">连接电堆5</button>
+				<button style="width: 75px;height: 30px;" onclick="CloseConn(5);">关闭连接</button>
+			</div>
+			<div>
+				<button style="width: 75px;height: 30px;" id="ShowStack6" name="ShowStack6" onclick="ShowStack('ShowStack6');">连接电堆6</button>
+				<button style="width: 75px;height: 30px;" onclick="CloseConn(6);">关闭连接</button>
+			</div>
+			<table class="stack1" name="stack1" style="text-align:center;width: 200px;">
+				<tr>
+					<td>Stack1</td>
+					<td colspan="2">
+						<span id="APCControlProgramSMState1"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 100px;">SetCurrent</td>
+					<td colspan="2" style="width: 100px;">
+						<span id="BoosterLoad_SetPoint_LoadCurrentOperation1" onclick="_edit.IN(this,30);">27</span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 100px;">Start</td>
+					<td style="width: 100px;">
+						<span id="OpcoReqStart1" name="OpcoReqStart">0</span>
+					</td>
+					<td>
+						<input type="button" id="OpcoReqStart_Button1" value="Start" onclick="changeStatus('OpcoReqStart1',31);"/>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 100px;">Stop</td>
+					<td style="width: 100px;">
+						<span id="OpcoReqStop1" name="OpcoReqStop">0</span>
+					</td>
+					<td>
+						<input type="button" id="OpcoReqStop_Button1" value="Stop" disabled="disabled" onclick="changeStatus('OpcoReqStop1',32);"/>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 100px;">Reset</td>
+					<td style="width: 100px;">
+						<span id="OpCoReqReset1" name="OpCoReqReset">0</span>
+					</td>
+					<td>
+						<input type="button" id="OpcoReqReset_Button1" value="Reset" disabled="disabled" onclick="changeStatus('OpCoReqReset1',33);"/>
+					</td>
+				</tr>
+			</table>
+			<table class="stack2" name="stack2" style="text-align:center;width: 200px;">
+				<tr>
+					<td>Stack2</td>
+					<td colspan="2">
+						<span id="APCControlProgramSMState2"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">SetCurrent</td>
+					<td colspan="2" style="width:100px;">
+						<span id="BoosterLoad_SetPoint_LoadCurrentOperation2" name="BoosterLoad_SetPoint_LoadCurrentOperation" onclick="_edit.IN(this,30);">2</span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Start</td>
+					<td style="width:100px;">
+						<span id="OpcoReqStart2" name="OpcoReqStart">0</span>
+					</td>
+					<td>
+						<button id="OpcoReqStart_Button2" onclick="changeStatus('OpcoReqStart2',31);">Start</button>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Stop</td>
+					<td style="width:100px;">
+						<span id="OpcoReqStop2" name="OpcoReqStop">0</span>
+					</td>
+					<td>
+						<button id="OpcoReqStop_Button2" disabled="disabled" onclick="changeStatus('OpcoReqStop2',32);">Stop</button>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Reset</td>
+					<td style="width:100px;">
+						<span id="OpCoReqReset2" name="OpCoReqReset">0</span>
+					</td>
+					<td>
+						<button id="OpcoReqReset_Button2" disabled="disabled" onclick="changeStatus('OpcoReqReset2',33);">Reset</button>
+					</td>
+				</tr>
+			</table>
+			<table class="stack3" name="stack3" style="text-align:center;width: 200px;">
+				<tr>
+					<td>Stack3</td>
+					<td colspan="2">
+						<span id="APCControlProgramSMState3"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">SetCurrent</td>
+					<td colspan="2" style="width:100px;">
+						<span id="BoosterLoad_SetPoint_LoadCurrentOperation3" name="BoosterLoad_SetPoint_LoadCurrentOperation"  onclick="_edit.IN(this,30);">27</span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Start</td>
+					<td style="width:100px;">
+						<span id="OpcoReqStart3" name="OpcoReqStart">1</span>
+					</td>
+					<td>
+						<button id="OpcoReqStart_Button3" onclick="changeStatus('OpcoReqStart3',31);">Start</button>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Stop</td>
+					<td style="width:100px;">
+						<span id="OpcoReqStop3" name="OpcoReqStop">1</span>
+					</td>
+					<td>
+						<button id="OpcoReqStop_Button3" disabled="disabled" onclick="changeStatus('OpcoReqStop3',32);">Stop</button>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Reset</td>
+					<td style="width:100px;">
+						<span id="OpCoReqReset3" name="OpCoReqReset">1</span>
+					</td>
+					<td>
+						<button id="OpcoReqReset_Button3" disabled="disabled" onclick="changeStatus('OpcoReqReset3',33);">Reset</button>
+					</td>
+				</tr>
+			</table>
+			<table class="stack4" name="stack4" style="text-align:center;width: 200px;">
+				<tr>
+					<td>Stack4</td>
+					<td colspan="2">
+						<span id="APCControlProgramSMState4"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">SetCurrent</td>
+					<td colspan="2" style="width:100px;">
+						<span id="BoosterLoad_SetPoint_LoadCurrentOperation4" name="BoosterLoad_SetPoint_LoadCurrentOperation" onclick="_edit.IN(this,30);">4</span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Start</td>
+					<td style="width:100px;">
+						<span id="OpcoReqStart4" name="OpcoReqStart">0</span>
+					</td>
+					<td>
+						<button id="OpcoReqStart_Button4" onclick="changeStatus('OpcoReqStart4',31);">Start</button>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Stop</td>
+					<td style="width:100px;">
+						<span id="OpcoReqStop4" name="OpcoReqStop">0</span>
+					</td>
+					<td>
+						<button id="OpcoReqStop_Button4" disabled="disabled" onclick="changeStatus('OpcoReqStop4',32);">Stop</button>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Reset</td>
+					<td style="width:100px;">
+						<span id="OpCoReqReset4" name="OpCoReqReset">0</span>
+					</td>
+					<td>
+						<button id="OpcoReqReset_Button4" disabled="disabled" onclick="changeStatus('OpCoReqReset4',33);">Reset</button>
+					</td>
+				</tr>
+			</table>
+			<table class="stack5" name="stack5" style="text-align:center;width: 200px;">
+				<tr>
+					<td>Stack5</td>
+					<td colspan="2">
+						<span id="APCControlProgramSMState5"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">SetCurrent</td>
+					<td colspan="2" style="width:100px;">
+						<span id="BoosterLoad_SetPoint_LoadCurrentOperation5" name="BoosterLoad_SetPoint_LoadCurrentOperation" onclick="_edit.IN(this,30);">5</span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Start</td>
+					<td style="width:100px;">
+						<span id="OpcoReqStart5" name="OpcoReqStart">0</span>
+					</td>
+					<td>
+						<button id="OpcoReqStart_Button5" onclick="changeStatus('OpcoReqStart5',31);">Start</button>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Stop</td>
+					<td style="width:100px;">
+						<span id="OpcoReqStop5" name="OpcoReqStop">0</span>
+					</td>
+					<td>
+						<button id="OpcoReqStop_Button5" disabled="disabled" onclick="changeStatus('OpcoReqStop5',32);">Stop</button>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Reset</td>
+					<td style="width:100px;">
+						<span id="OpCoReqReset5" name="OpCoReqReset">0</span>
+					</td>
+					<td>
+						<button id="OpcoReqReset_Button5" disabled="disabled" onclick="changeStatus('OpCoReqReset5',33);">Reset</button>
+					</td>
+				</tr>
+			</table>
+			<table class="stack6" name="stack6" style="text-align:center;width: 200px;">
+				<tr>
+					<td>Stack6</td>
+					<td colspan="2">
+						<span id="APCControlProgramSMState6"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">SetCurrent</td>
+					<td colspan="2" style="width:100px;">
+						<span id="BoosterLoad_SetPoint_LoadCurrentOperation6" name="BoosterLoad_SetPoint_LoadCurrentOperation6" onclick="_edit.IN(this,30);">6</span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Start</td>
+					<td style="width:100px;">
+						<span id="OpcoReqStart6" name="OpcoReqStart">0</span>
+					</td>
+					<td>
+						<button id="OpcoReqStart_Button6" onclick="changeStatus('OpcoReqStart6',31);">Start</button>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Stop</td>
+					<td style="width:100px;">
+						<span id="OpcoReqStop6" name="OpcoReqStop">0</span>
+					</td>
+					<td>
+						<button id="OpcoReqStop_Button6" disabled="disabled" onclick="changeStatus('OpcoReqStop6',32);">Stop</button>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100px;">Reset</td>
+					<td style="width:100px;">
+						<span id="OpCoReqReset6" name="OpCoReqReset6">0</span>
+					</td>
+					<td>
+						<button id="OpCoReqReset_Button6" disabled="disabled" onclick="changeStatus('OpCoReqReset6',33);">Reset</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
