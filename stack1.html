@@ -281,12 +281,6 @@
 			for (var k = 0; k < stack6_elements.length; k++) {
 				stack6_elements[k].innerText=json_Page.data[5].stack6[k].v;
 			}
-			console.log(json_Page.data[0].stack1[25].v);
-			console.log(json_Page.data[1].stack2[25].v);
-			console.log(json_Page.data[2].stack3[25].v);
-			console.log(json_Page.data[3].stack4[25].v);
-			console.log(json_Page.data[4].stack5[25].v);
-			console.log(json_Page.data[5].stack6[25].v);
 			APCControlProgramSMState1.innerText=(json_Page.data[0].stack1[25].v==1)?"Standby":"Preheat";
 			APCControlProgramSMState2.innerText=(json_Page.data[1].stack2[25].v==1)?"Standby":"Preheat";
 			APCControlProgramSMState3.innerText=(json_Page.data[2].stack3[25].v==1)?"Standby":"Preheat";
@@ -513,7 +507,8 @@
 	</script>
 </head>
 <body>
-	<div class="main" style="width:100%;margin-top:30px;">
+	<div class="main" id="main" style="position:absolute;width:1280px;height:600px;top:50%;left:50%;margin-left: -640px;margin-top: -300px;">
+		<div style="width:200px;height:40px;margin:0 auto;font-size: 24px;">电堆仿真系统</div>
 		<div class="img" style="float:left;background-image: url('pic1.png');margin-left:30px;width:924px;height:537px;">
 			<div class="part1" style="width:100%;height: 215px;">
 				<div class="FuelBuffer left" style="display:inline-block;width:12%;">
@@ -732,30 +727,30 @@
 				</div>
 			</div>
 		</div>
-		<div class="left" style="width: 20%;">
-			<div>
-				<button style="width: 75px;height: 30px;" id="ShowStack1" name="ShowStack1" onclick="ShowStack('ShowStack1');">连接电堆1</button>
-				<button style="width: 75px;height: 30px;" onclick="CloseConn(1);">关闭连接</button>
+		<div class="left" style="width: 256px;height: 300px;top: 50%;position: relative;margin-top: -220px;">
+			<div style="margin: 5px 20px;">
+				<button style="width: 75px;height: 30px;background-color: #3b61ac;border: none;color: #fff;" id="ShowStack1" name="ShowStack1" onclick="ShowStack('ShowStack1');">连接电堆1</button>
+				<button style="width: 75px;height: 30px;background-color: #3b61ac;border: none;color: #fff;" onclick="CloseConn(1);">关闭连接</button>
 			</div>
-			<div>
-				<button style="width: 75px;height: 30px;" id="ShowStack2" name="ShowStack2" onclick="ShowStack('ShowStack2');">连接电堆2</button>
-				<button style="width: 75px;height: 30px;" onclick="CloseConn(2);">关闭连接</button>
+			<div style="margin: 5px 20px;">
+				<button style="width: 75px;height: 30px;background-color: #3b61ac;border: none;color: #fff;" id="ShowStack2" name="ShowStack2" onclick="ShowStack('ShowStack2');">连接电堆2</button>
+				<button style="width: 75px;height: 30px;background-color: #3b61ac;border: none;color: #fff;" onclick="CloseConn(2);">关闭连接</button>
 			</div>
-			<div>
-				<button style="width: 75px;height: 30px;" id="ShowStack3" name="ShowStack3" onclick="ShowStack('ShowStack3');">连接电堆3</button>
-				<button style="width: 75px;height: 30px;" onclick="CloseConn(3);">关闭连接</button>
+			<div style="margin: 5px 20px;">
+				<button style="width: 75px;height: 30px;background-color: #3b61ac;border: none;color: #fff;" id="ShowStack3" name="ShowStack3" onclick="ShowStack('ShowStack3');">连接电堆3</button>
+				<button style="width: 75px;height: 30px;background-color: #3b61ac;border: none;color: #fff;" onclick="CloseConn(3);">关闭连接</button>
 			</div>
-			<div>
-				<button style="width: 75px;height: 30px;" id="ShowStack4" name="ShowStack4" onclick="ShowStack('ShowStack4');">连接电堆4</button>
-				<button style="width: 75px;height: 30px;" onclick="CloseConn(4);">关闭连接</button>
+			<div style="margin: 5px 20px;">
+				<button style="width: 75px;height: 30px;background-color: #3b61ac;border: none;color: #fff;" id="ShowStack4" name="ShowStack4" onclick="ShowStack('ShowStack4');">连接电堆4</button>
+				<button style="width: 75px;height: 30px;background-color: #3b61ac;border: none;color: #fff;" onclick="CloseConn(4);">关闭连接</button>
 			</div>
-			<div>
-				<button style="width: 75px;height: 30px;" id="ShowStack5" name="ShowStack5" onclick="ShowStack('ShowStack5');">连接电堆5</button>
-				<button style="width: 75px;height: 30px;" onclick="CloseConn(5);">关闭连接</button>
+			<div style="margin: 5px 20px;">
+				<button style="width: 75px;height: 30px;background-color: #3b61ac;border: none;color: #fff;" id="ShowStack5" name="ShowStack5" onclick="ShowStack('ShowStack5');">连接电堆5</button>
+				<button style="width: 75px;height: 30px;background-color: #3b61ac;border: none;color: #fff;" onclick="CloseConn(5);">关闭连接</button>
 			</div>
-			<div>
-				<button style="width: 75px;height: 30px;" id="ShowStack6" name="ShowStack6" onclick="ShowStack('ShowStack6');">连接电堆6</button>
-				<button style="width: 75px;height: 30px;" onclick="CloseConn(6);">关闭连接</button>
+			<div style="margin: 5px 20px;">
+				<button style="width: 75px;height: 30px;background-color: #3b61ac;border: none;color: #fff;" id="ShowStack6" name="ShowStack6" onclick="ShowStack('ShowStack6');">连接电堆6</button>
+				<button style="width: 75px;height: 30px;background-color: #3b61ac;border: none;color: #fff;" onclick="CloseConn(6);">关闭连接</button>
 			</div>
 			<table class="stack1" name="stack1" style="text-align:center;width: 200px;">
 				<tr>
